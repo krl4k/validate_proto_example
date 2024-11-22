@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package admin.v1;
+
+option go_package = "github.com/krl4k/api/grpc/admin/v1;adminv1";
+
+service AdminService {
+  rpc CreateAdmin(CreateAdminRequest) returns (CreateAdminResponse) {}
+  rpc GetAdmin(GetAdminRequest) returns (GetAdminResponse) {}
+  rpc UpdateAdmin(UpdateAdminRequest) returns (UpdateAdminResponse) {}
+  rpc DeleteAdmin(DeleteAdminRequest) returns (DeleteAdminResponse) {}
+  rpc ListAdmins(ListAdminsRequest) returns (ListAdminsResponse) {}
+}
+
+message Admin {
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  string full_name = 4;
+  repeated string roles = 5;
+  bool is_active = 6;
+  int64 created_at = 7;
+  int64 updated_at = 8;
+}
+
+message CreateAdminRequest {
+  string username = 1;
+  string email = 2;
+  string password = 3;
+  string full_name = 4;
+  repeated string roles = 5;
+}
+
+message CreateAdminResponse {
+  Admin admin = 1;
+}
+
+message GetAdminRequest {
+  string id = 1;
+}
+
+message GetAdminResponse {
+  Admin admin = 1;
+}
+
+message UpdateAdminRequest {
+  string id = 1;
+  string email = 2;
+  string full_name = 3;
+  repeated string roles = 4;
+  bool is_active = 5;
+}
+
+message UpdateAdminResponse {
+  Admin admin = 1;
+}
+
+message DeleteAdminRequest {
+  string id = 1;
+}
+
+message DeleteAdminResponse {
+  bool success = 1;
+}
+
+message ListAdminsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ListAdminsResponse {
+  repeated Admin admins = 1;
+  string next_page_token = 2;
+  int32 total_count = 3;
+}
